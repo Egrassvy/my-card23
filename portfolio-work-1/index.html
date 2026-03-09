@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кофейня «Уголок» — вкусный кофе в центре города</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #1a1614;
+      color: #f5f0eb;
+      line-height: 1.6;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(26, 22, 20, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0.75rem 0;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; color: #c9a962; text-decoration: none; }
+    nav a {
+      color: #c4beb6;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #f5f0eb; }
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      background: linear-gradient(180deg, #2a2420 0%, #1a1614 100%);
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #f5f0eb;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #a89f94;
+      max-width: 480px;
+      margin: 0 auto 1.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 1.75rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1a1614;
+      background: #c9a962;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn:hover { background: #d4b872; transform: translateY(-2px); }
+    /* Section */
+    section {
+      padding: 4rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #f5f0eb;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .card h3 { font-family: 'Montserrat', sans-serif; font-size: 1.1rem; margin-bottom: 0.5rem; color: #c9a962; }
+    .card p { color: #a89f94; font-size: 0.9rem; }
+    /* Form */
+    .form-section { background: #221e1b; }
+    .form-wrap {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .form-wrap label {
+      display: block;
+      font-size: 0.9rem;
+      color: #a89f94;
+      margin-bottom: 0.35rem;
+      margin-top: 1rem;
+    }
+    .form-wrap label:first-of-type { margin-top: 0; }
+    .form-wrap input,
+    .form-wrap textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-family: inherit;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #f5f0eb;
+    }
+    .form-wrap textarea { min-height: 100px; resize: vertical; }
+    .form-wrap input::placeholder,
+    .form-wrap textarea::placeholder { color: #6b6359; }
+    .form-wrap button {
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0.85rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1a1614;
+      background: #c9a962;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .form-wrap button:hover { background: #d4b872; }
+    .form-success { display: none; text-align: center; color: #7cb87c; margin-top: 1rem; }
+    .form-success.visible { display: block; }
+    /* Footer */
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: #6b6359;
+      font-size: 0.9rem;
+    }
+    footer a { color: #c9a962; text-decoration: none; }
+    @media (max-width: 640px) {
+      nav a { margin-left: 1rem; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="#" class="logo">Уголок</a>
+      <nav>
+        <a href="#about">О нас</a>
+        <a href="#menu">Меню</a>
+        <a href="#order">Заказать</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Кофейня «Уголок»</h1>
+      <p>Свежая выпечка и авторский кофе в уютной атмосфере. Работаем с 8:00 до 22:00.</p>
+      <a href="#order" class="btn">Оставить заявку</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>О нас</h2>
+      <p style="text-align: center; color: #a89f94; max-width: 560px; margin: 0 auto;">
+        Мы готовим кофе из зёрен собственной обжарки и каждый день печём круассаны и десерты. 
+        В «Уголке» можно поработать за ноутбуком или встретиться с друзьями.
+      </p>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="container">
+      <h2>Популярное</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Капучино</h3>
+          <p>Двойной эспрессо и нежная молочная пенка. 180 ₽</p>
+        </div>
+        <div class="card">
+          <h3>Круассан</h3>
+          <p>Свежая выпечка к кофе. 120 ₽</p>
+        </div>
+        <div class="card">
+          <h3>Сезонный латте</h3>
+          <p>Сироп на выбор: карамель, ваниль, лесной орех. 220 ₽</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="order" class="form-section">
+    <div class="container">
+      <h2>Заказать стол или торт</h2>
+      <form class="form-wrap" id="order-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+        <input type="hidden" name="_subject" value="Заявка с сайта Кофейня Уголок">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" placeholder="Как к вам обращаться?" required>
+        <label for="phone">Телефон</label>
+        <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" required>
+        <label for="msg">Сообщение</label>
+        <textarea id="msg" name="message" placeholder="Дата, время, количество гостей или пожелания по торту"></textarea>
+        <button type="submit">Отправить заявку</button>
+      </form>
+      <p class="form-success" id="form-success">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="container" style="text-align: center;">
+      <h2>Контакты</h2>
+      <p style="color: #a89f94; margin-top: 0.5rem;">ул. Примерная, 15 · Ежедневно 8:00–22:00</p>
+      <p style="margin-top: 1rem;"><a href="tel:+79991234567" style="color: #c9a962;">+7 (999) 123-45-67</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Кофейня «Уголок» · Пример лендинга для портфолио</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('order-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var success = document.getElementById('form-success');
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function(r) { if (r.ok) { success.classList.add('visible'); form.reset(); } })
+        .catch(function() { success.textContent = 'Ошибка отправки. Проверьте подключение или настройте Formspree.'; success.classList.add('visible'); });
+    });
+  </script>
+</body>
+</html>
