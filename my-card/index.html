@@ -348,18 +348,24 @@
     }
     /* Предотвращение переноса длинных слов/URL */
     .contacts-list a { word-break: break-word; }
-    /* Фоновое свечение за курсором */
-    .cursor-glow {
+    /* Фон: паутина сети */
+    .web-bg {
       position: fixed;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0.04) 40%, transparent 70%);
-      pointer-events: none;
+      inset: 0;
       z-index: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.2s;
+      pointer-events: none;
+      overflow: hidden;
     }
+    .web-bg svg {
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      left: -20%;
+      top: -20%;
+      transition: transform 0.4s ease-out;
+    }
+    .web-bg line { stroke: rgba(56, 189, 248, 0.09); stroke-width: 0.5; }
+    .web-bg circle { fill: rgba(56, 189, 248, 0.06); }
     header, section, footer { position: relative; z-index: 1; }
     /* Само печатающийся текст */
     .hero-typewriter {
@@ -375,7 +381,29 @@
   </style>
 </head>
 <body>
-  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <div class="web-bg" id="web-bg" aria-hidden="true">
+    <svg id="web-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="web-grid" width="40" height="30" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="40" y2="0"/><line x1="0" y1="0" x2="0" y2="30"/>
+        <line x1="40" y1="15" x2="0" y2="15"/><line x1="20" y1="30" x2="20" y2="0"/>
+      </pattern></defs>
+      <rect width="400" height="300" fill="url(#web-grid)"/>
+      <g fill="none" stroke="rgba(56,189,248,0.07)" stroke-width="0.4">
+        <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
+        <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
+        <line x1="0" y1="250" x2="400" y2="250"/>
+        <line x1="50" y1="0" x2="50" y2="300"/><line x1="100" y1="0" x2="100" y2="300"/>
+        <line x1="150" y1="0" x2="150" y2="300"/><line x1="200" y1="0" x2="200" y2="300"/>
+        <line x1="250" y1="0" x2="250" y2="300"/><line x1="300" y1="0" x2="300" y2="300"/><line x1="350" y1="0" x2="350" y2="300"/>
+      </g>
+      <g fill="none" stroke="rgba(56,189,248,0.06)" stroke-width="0.35">
+        <line x1="0" y1="0" x2="200" y2="150"/><line x1="400" y1="0" x2="200" y2="150"/>
+        <line x1="0" y1="300" x2="200" y2="150"/><line x1="400" y1="300" x2="200" y2="150"/>
+        <line x1="0" y1="150" x2="400" y2="150"/><line x1="200" y1="0" x2="200" y2="300"/>
+        <line x1="0" y1="75" x2="400" y2="225"/><line x1="0" y1="225" x2="400" y2="75"/>
+      </g>
+    </svg>
+  </div>
   <header>
     <div class="container">
       <a href="#" class="logo">Егор Кучулин</a>
@@ -454,16 +482,15 @@
   </script>
   <script>
   (function() {
-    var glow = document.getElementById('cursor-glow');
-    if (glow) {
-      var x = 0, y = 0;
-      document.addEventListener('mousemove', function(e) { x = e.clientX; y = e.clientY; });
-      function updateGlow() {
-        glow.style.left = x + 'px';
-        glow.style.top = y + 'px';
-        requestAnimationFrame(updateGlow);
-      }
-      updateGlow();
+    var webSvg = document.getElementById('web-svg');
+    if (webSvg) {
+      document.addEventListener('mousemove', function(e) {
+        var cx = window.innerWidth / 2;
+        var cy = window.innerHeight / 2;
+        var dx = (e.clientX - cx) * 0.028;
+        var dy = (e.clientY - cy) * 0.028;
+        webSvg.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+      });
     }
     var typewriterEl = document.getElementById('typewriter-text');
     if (typewriterEl) {
