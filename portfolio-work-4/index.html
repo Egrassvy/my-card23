@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Волна — арт-пространство</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Брутализм: грубая сетка, жирный акцент */
+    header {
+      padding: 1.5rem 0;
+      border-bottom: 4px solid #ff3366;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff3366;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    nav a:hover { color: #ff3366; }
+
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      padding: 4rem 0;
+      border-bottom: 4px solid #ff3366;
+    }
+    .hero .container {
+      width: 100%;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      font-weight: 700;
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .accent { color: #ff3366; }
+    .hero p {
+      font-size: 1.15rem;
+      color: #888;
+      max-width: 420px;
+      margin-top: 1.5rem;
+    }
+
+    section {
+      padding: 4rem 0;
+      border-bottom: 2px solid #222;
+    }
+    section h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+      color: #ff3366;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+    .about-grid p {
+      color: #aaa;
+      font-size: 1rem;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-block {
+      border: 2px solid #333;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .service-block:hover { border-color: #ff3366; }
+    .service-block h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .service-block p { color: #888; font-size: 0.9rem; }
+
+    .cta {
+      text-align: center;
+      padding: 4rem 0;
+    }
+    .cta h2 { margin-bottom: 1rem; }
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #fff;
+      background: #ff3366;
+      border: 2px solid #ff3366;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover {
+      background: transparent;
+      color: #ff3366;
+    }
+
+    .contacts {
+      border-bottom: none;
+    }
+    .contacts p { color: #888; margin-bottom: 0.5rem; }
+    .contacts a {
+      color: #ff3366;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .contacts a:hover { text-decoration: underline; }
+
+    footer {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-top: 4px solid #ff3366;
+      color: #666;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="#" class="logo">Волна</a>
+      <nav>
+        <a href="#about">О нас</a>
+        <a href="#services">Направления</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Арт-<span class="accent">пространство</span><br>для событий и идей</h1>
+      <p>Площадка для выставок, воркшопов и концертов. Аренда зала под ваше мероприятие.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>О нас</h2>
+      <div class="about-grid">
+        <p>«Волна» — это зал в центре города с панорамными окнами и профессиональным светом. Мы принимаем выставки, лекции, концерты и частные события.</p>
+        <p>Площадь 120 м², вместимость до 50 гостей. Есть проектор, звук и базовое оборудование. Подходит для презентаций, дней рождения и съёмок.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <h2>Направления</h2>
+      <div class="services">
+        <div class="service-block">
+          <h3>Выставки</h3>
+          <p>Аренда стен и пространства под экспозиции. Срок от одной недели.</p>
+        </div>
+        <div class="service-block">
+          <h3>Воркшопы</h3>
+          <p>Проведение мастер-классов и лекций. Столы и стулья по запросу.</p>
+        </div>
+        <div class="service-block">
+          <h3>Концерты</h3>
+          <p>Камерные концерты и акустические выступления. Звук и свет.</p>
+        </div>
+        <div class="service-block">
+          <h3>Съёмки</h3>
+          <p>Фото- и видеосъёмка. Почасовая аренда, без выходных.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Забронировать</h2>
+      <p style="color:#888;">Оставьте заявку — мы свяжемся в течение дня и подберём дату.</p>
+      <a href="#contact" class="btn">Оставить заявку</a>
+    </div>
+  </section>
+
+  <section id="contact" class="contacts">
+    <div class="container">
+      <h2>Контакты</h2>
+      <p>Москва, ул. Примерная, 1</p>
+      <p><a href="mailto:hello@volna.example">hello@volna.example</a></p>
+      <p><a href="tel:+79991234567">+7 999 123-45-67</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Волна · Арт-пространство. Работа для портфолио.</p>
+    </div>
+  </footer>
+</body>
+</html>
