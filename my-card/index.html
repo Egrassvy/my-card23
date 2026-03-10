@@ -348,7 +348,7 @@
     }
     /* Предотвращение переноса длинных слов/URL */
     .contacts-list a { word-break: break-word; }
-    /* Фон: паутина сети */
+    /* Фон: паутина сети (линии и точки двигаются за курсором) */
     .web-bg {
       position: fixed;
       inset: 0;
@@ -358,14 +358,12 @@
     }
     .web-bg svg {
       position: absolute;
-      width: 140%;
-      height: 140%;
-      left: -20%;
-      top: -20%;
-      transition: transform 0.4s ease-out;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    .web-bg line { stroke: rgba(56, 189, 248, 0.09); stroke-width: 0.5; }
-    .web-bg circle { fill: rgba(56, 189, 248, 0.06); }
+    .web-bg line { stroke: rgba(56, 189, 248, 0.12); stroke-width: 0.8; }
+    .web-bg circle { fill: rgba(56, 189, 248, 0.15); }
     header, section, footer { position: relative; z-index: 1; }
     /* Само печатающийся текст */
     .hero-typewriter {
@@ -381,29 +379,7 @@
   </style>
 </head>
 <body>
-  <div class="web-bg" id="web-bg" aria-hidden="true">
-    <svg id="web-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-      <defs><pattern id="web-grid" width="40" height="30" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="40" y2="0"/><line x1="0" y1="0" x2="0" y2="30"/>
-        <line x1="40" y1="15" x2="0" y2="15"/><line x1="20" y1="30" x2="20" y2="0"/>
-      </pattern></defs>
-      <rect width="400" height="300" fill="url(#web-grid)"/>
-      <g fill="none" stroke="rgba(56,189,248,0.07)" stroke-width="0.4">
-        <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-        <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-        <line x1="0" y1="250" x2="400" y2="250"/>
-        <line x1="50" y1="0" x2="50" y2="300"/><line x1="100" y1="0" x2="100" y2="300"/>
-        <line x1="150" y1="0" x2="150" y2="300"/><line x1="200" y1="0" x2="200" y2="300"/>
-        <line x1="250" y1="0" x2="250" y2="300"/><line x1="300" y1="0" x2="300" y2="300"/><line x1="350" y1="0" x2="350" y2="300"/>
-      </g>
-      <g fill="none" stroke="rgba(56,189,248,0.06)" stroke-width="0.35">
-        <line x1="0" y1="0" x2="200" y2="150"/><line x1="400" y1="0" x2="200" y2="150"/>
-        <line x1="0" y1="300" x2="200" y2="150"/><line x1="400" y1="300" x2="200" y2="150"/>
-        <line x1="0" y1="150" x2="400" y2="150"/><line x1="200" y1="0" x2="200" y2="300"/>
-        <line x1="0" y1="75" x2="400" y2="225"/><line x1="0" y1="225" x2="400" y2="75"/>
-      </g>
-    </svg>
-  </div>
+  <div class="web-bg" id="web-bg" aria-hidden="true"></div>
   <header>
     <div class="container">
       <a href="#" class="logo">Егор Кучулин</a>
@@ -482,15 +458,100 @@
   </script>
   <script>
   (function() {
-    var webSvg = document.getElementById('web-svg');
-    if (webSvg) {
+    var webBg = document.getElementById('web-bg');
+    if (webBg) {
+      var step = 72;
+      var pull = 0.18;
+      var ease = 0.065;
+      var mouseX = 0;
+      var mouseY = 0;
+      var nodes = [];
+      var lines = [];
+      var circlesEl = [];
+      var linesEl = [];
+
+      function build() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var cols = Math.ceil(w / step) + 2;
+        var rows = Math.ceil(h / step) + 2;
+        var offsetX = -step;
+        var offsetY = -step;
+        nodes = [];
+        for (var i = 0; i < rows; i++) {
+          for (var j = 0; j < cols; j++) {
+            var x = offsetX + j * step;
+            var y = offsetY + i * step;
+            nodes.push({ baseX: x, baseY: y, curX: x, curY: y });
+          }
+        }
+        lines = [];
+        for (var i = 0; i < rows; i++) {
+          for (var j = 0; j < cols; j++) {
+            var idx = i * cols + j;
+            if (j < cols - 1) lines.push([idx, idx + 1]);
+            if (i < rows - 1) lines.push([idx, idx + cols]);
+          }
+        }
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('id', 'web-svg');
+        svg.setAttribute('viewBox', (-step * 2) + ' ' + (-step * 2) + ' ' + (w + step * 4) + ' ' + (h + step * 4));
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+        var gLines = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        var gCircles = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        linesEl = [];
+        lines.forEach(function(pair) {
+          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          gLines.appendChild(line);
+          linesEl.push({ el: line, a: pair[0], b: pair[1] });
+        });
+        circlesEl = [];
+        nodes.forEach(function() {
+          var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('r', '2');
+          gCircles.appendChild(circle);
+          circlesEl.push(circle);
+        });
+        svg.appendChild(gLines);
+        svg.appendChild(gCircles);
+        webBg.innerHTML = '';
+        webBg.appendChild(svg);
+      }
+
+      function tick() {
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          var tx = n.baseX + (mouseX - n.baseX) * pull;
+          var ty = n.baseY + (mouseY - n.baseY) * pull;
+          n.curX += (tx - n.curX) * ease;
+          n.curY += (ty - n.curY) * ease;
+        }
+        circlesEl.forEach(function(el, i) {
+          var n = nodes[i];
+          el.setAttribute('cx', n.curX);
+          el.setAttribute('cy', n.curY);
+        });
+        linesEl.forEach(function(o) {
+          var a = nodes[o.a];
+          var b = nodes[o.b];
+          o.el.setAttribute('x1', a.curX);
+          o.el.setAttribute('y1', a.curY);
+          o.el.setAttribute('x2', b.curX);
+          o.el.setAttribute('y2', b.curY);
+        });
+        requestAnimationFrame(tick);
+      }
+
       document.addEventListener('mousemove', function(e) {
-        var cx = window.innerWidth / 2;
-        var cy = window.innerHeight / 2;
-        var dx = (e.clientX - cx) * 0.028;
-        var dy = (e.clientY - cy) * 0.028;
-        webSvg.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+        mouseX = e.clientX;
+        mouseY = e.clientY;
       });
+      window.addEventListener('resize', function() {
+        build();
+      });
+      build();
+      tick();
     }
     var typewriterEl = document.getElementById('typewriter-text');
     if (typewriterEl) {
