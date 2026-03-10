@@ -176,6 +176,28 @@
       color: #e2e8f0;
     }
     .service-card p { color: #94a3b8; font-size: 0.9rem; }
+    .service-card[role="button"] { cursor: pointer; }
+    .service-card .service-card-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .service-card.expanded .service-card-detail { max-height: 320px; }
+    .service-card .service-card-detail p { margin-top: 0.75rem; }
+    .service-card .service-card-meta {
+      font-size: 0.85rem;
+      color: #38bdf8;
+      margin-top: 0.35rem;
+    }
+    .service-card .service-card-meta strong { color: #e2e8f0; margin-right: 0.25rem; }
+    .service-card .service-card-toggle {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #38bdf8;
+    }
+    .service-card .service-card-toggle::after { content: 'Подробнее ▼'; }
+    .service-card.expanded .service-card-toggle::after { content: 'Свернуть ▲'; }
     /* Portfolio */
     .portfolio-grid {
       display: grid;
@@ -370,35 +392,40 @@
   <section id="services">
     <div class="container">
       <h2>Услуги</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="icon">📄</div>
-          <h3>Одностраничный лендинг</h3>
-          <p>Одна страница под вашу услугу или продукт: блоки, форма заявки, контакты. Срок от 3 дней.</p>
-        </div>
-        <div class="service-card">
-          <div class="icon">🌐</div>
-          <h3>Сайт-визитка</h3>
-          <p>Несколько страниц: главная, услуги/каталог, контакты. Под ключ с вашими текстами и фото.</p>
-        </div>
-        <div class="service-card">
-          <div class="icon">📱</div>
-          <h3>Адаптивная вёрстка</h3>
-          <p>Корректное отображение на телефоне, планшете и компьютере. HTML, CSS, при необходимости JS.</p>
-        </div>
-        <div class="service-card">
-          <div class="icon">✉️</div>
-          <h3>Форма заявки</h3>
-          <p>Кнопка «Забронировать» / «Оставить заявку» с отправкой на почту или в Telegram.</p>
-        </div>
-        <div class="service-card">
-          <div class="icon">📑</div>
-          <h3>Полноценный многостраничный сайт</h3>
-          <p>Главная, каталог, отдельные страницы под услуги или товары, контакты. Под ключ с вашими текстами и фото.</p>
-        </div>
-      </div>
+      <div class="services-grid" id="services-grid"></div>
     </div>
   </section>
+  <script>
+  (function() {
+    var servicesDB = [
+      { icon: '\uD83D\uDCC4', title: 'Одностраничный лендинг', shortDesc: 'Одна страница под вашу услугу или продукт: блоки, форма заявки, контакты. Срок от 3 дней.', fullDesc: 'Одна страница с героем, блоками о преимуществах, формой заявки и контактами. Подходит для кафе, студий, услуг. Адаптивная вёрстка, быстрая загрузка. Тексты и фото — ваши.', duration: 'от 3 дней', price: 'от 5 000 \u20BD' },
+      { icon: '\uD83C\uDF10', title: 'Сайт-визитка', shortDesc: 'Несколько страниц: главная, услуги/каталог, контакты. Под ключ с вашими текстами и фото.', fullDesc: 'Главная страница с описанием и ключевыми блоками, страница услуг или каталога, контакты с формой обратной связи. Единый стиль, адаптив. Под ключ: вёрстка под ваши тексты и изображения.', duration: '5–7 дней', price: 'от 8 000 \u20BD' },
+      { icon: '\uD83D\uDCF1', title: 'Адаптивная вёрстка', shortDesc: 'Корректное отображение на телефоне, планшете и компьютере. HTML, CSS, при необходимости JS.', fullDesc: 'Вёрстка под мобильные, планшеты и десктоп. HTML и CSS, при необходимости лёгкий JavaScript для форм и интерактива. Быстрая загрузка и удобная навигация на любом устройстве.', duration: 'по объёму', price: 'от 3 000 \u20BD' },
+      { icon: '\u2709\uFE0F', title: 'Форма заявки', shortDesc: 'Кнопка «Забронировать» / «Оставить заявку» с отправкой на почту или в Telegram.', fullDesc: 'Форма «Оставить заявку», «Забронировать» или «Заказать звонок» с отправкой на вашу почту или в Telegram. Настройка через Formspree или аналог. Без программирования на вашей стороне.', duration: '1–2 дня', price: 'от 1 500 \u20BD' },
+      { icon: '\uD83D\uDCD1', title: 'Полноценный многостраничный сайт', shortDesc: 'Главная, каталог, отдельные страницы под услуги или товары, контакты. Под ключ с вашими текстами и фото.', fullDesc: 'Главная, каталог услуг или товаров, отдельные страницы по каждому направлению, контакты и форма заявки. Адаптивная вёрстка, единый стиль. Под ключ: ваши тексты и фото, готовность к размещению на хостинге.', duration: '10–14 дней', price: 'от 15 000 \u20BD' }
+    ];
+    var grid = document.getElementById('services-grid');
+    if (grid) {
+      grid.innerHTML = servicesDB.map(function(s) {
+        return '<div class="service-card" role="button" tabindex="0">' +
+          '<div class="icon">' + s.icon + '</div>' +
+          '<h3>' + s.title + '</h3>' +
+          '<p class="service-card-short">' + s.shortDesc + '</p>' +
+          '<div class="service-card-detail">' +
+            '<p class="service-card-full">' + s.fullDesc + '</p>' +
+            '<p class="service-card-meta"><strong>Срок:</strong> ' + s.duration + '</p>' +
+            '<p class="service-card-meta"><strong>Стоимость:</strong> ' + s.price + '</p>' +
+          '</div>' +
+          '<span class="service-card-toggle" aria-hidden="true"></span>' +
+        '</div>';
+      }).join('');
+      grid.querySelectorAll('.service-card').forEach(function(card) {
+        card.addEventListener('click', function() { card.classList.toggle('expanded'); });
+        card.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('expanded'); } });
+      });
+    }
+  })();
+  </script>
 
   <section id="portfolio">
     <div class="container">
