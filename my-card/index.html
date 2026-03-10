@@ -348,9 +348,34 @@
     }
     /* Предотвращение переноса длинных слов/URL */
     .contacts-list a { word-break: break-word; }
+    /* Фоновое свечение за курсором */
+    .cursor-glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0.04) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s;
+    }
+    header, section, footer { position: relative; z-index: 1; }
+    /* Само печатающийся текст */
+    .hero-typewriter {
+      min-height: 1.5em;
+      margin-top: 0.5rem;
+    }
+    .hero-typewriter .typewriter-cursor {
+      color: #38bdf8;
+      font-weight: 300;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
   <header>
     <div class="container">
       <a href="#" class="logo">Егор Кучулин</a>
@@ -370,6 +395,7 @@
     <div class="container">
       <h1>Лендинги и сайты-визитки</h1>
       <p>Делаю одностраничные и многостраничные сайты: адаптивная вёрстка, форма заявки, быстрые сроки.</p>
+      <p class="hero-typewriter" aria-live="polite"><span id="typewriter-text"></span><span class="typewriter-cursor" aria-hidden="true">|</span></p>
     </div>
   </section>
 
@@ -423,6 +449,50 @@
         card.addEventListener('click', function() { card.classList.toggle('expanded'); });
         card.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('expanded'); } });
       });
+    }
+  })();
+  </script>
+  <script>
+  (function() {
+    var glow = document.getElementById('cursor-glow');
+    if (glow) {
+      var x = 0, y = 0;
+      document.addEventListener('mousemove', function(e) { x = e.clientX; y = e.clientY; });
+      function updateGlow() {
+        glow.style.left = x + 'px';
+        glow.style.top = y + 'px';
+        requestAnimationFrame(updateGlow);
+      }
+      updateGlow();
+    }
+    var typewriterEl = document.getElementById('typewriter-text');
+    if (typewriterEl) {
+      var phrases = ['Адаптивная вёрстка · Форма заявки · Срок от 3 дней', 'Лендинг под ключ · HTML, CSS · Быстрые сроки'];
+      var phraseIndex = 0;
+      var charIndex = 0;
+      var delay = 80;
+      var pauseEnd = 2200;
+      function typeChar() {
+        var phrase = phrases[phraseIndex];
+        if (charIndex <= phrase.length) {
+          typewriterEl.textContent = phrase.slice(0, charIndex);
+          charIndex++;
+          setTimeout(typeChar, delay);
+        } else {
+          setTimeout(clearAndNext, pauseEnd);
+        }
+      }
+      function clearAndNext() {
+        if (charIndex > 0) {
+          charIndex--;
+          typewriterEl.textContent = phrases[phraseIndex].slice(0, charIndex);
+          setTimeout(clearAndNext, 40);
+        } else {
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeChar, 400);
+        }
+      }
+      setTimeout(typeChar, 600);
     }
   })();
   </script>
