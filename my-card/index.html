@@ -338,23 +338,6 @@
       border-color: rgba(56,189,248,0.4);
       box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 36px rgba(56,189,248,0.18);
     }
-    .service-card-arrow {
-      display: none;
-      position: absolute;
-      right: 1rem;
-      top: 1.25rem;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(56,189,248,0.2);
-      color: #38bdf8;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      pointer-events: none;
-      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), background 0.4s ease;
-    }
-    .service-card.is-open .service-card-arrow { transform: rotate(180deg); background: rgba(56,189,248,0.35); }
     .service-card .icon {
       width: 44px;
       height: 44px;
@@ -596,17 +579,25 @@
         grid-template-columns: 1fr;
         gap: 0.75rem;
       }
-      .service-card { padding: 1rem; padding-right: 2.75rem; cursor: pointer; }
+      .service-card { padding: 1rem; cursor: pointer; overflow: hidden; }
       .service-card:hover { height: 260px; transform: none; }
+      .service-card:not(.is-open) { height: 260px !important; overflow: hidden !important; }
+      .service-card:not(.is-open) .service-card-detail {
+        max-height: 0 !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+        transform: rotateX(0) translateY(0);
+        transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.35s ease, overflow 0s 0.5s;
+      }
       .service-card.is-open { height: auto; overflow: visible; padding-bottom: 0.75rem; }
       .service-card.is-open .service-card-detail {
         max-height: 520px;
         opacity: 1;
         transform: rotateX(0) translateY(0);
-        transition: max-height 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s, transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) 0.05s;
+        overflow: visible;
+        transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease 0.05s;
       }
       .service-card.is-open .icon { box-shadow: 0 0 20px rgba(56,189,248,0.3); transform: scale(1.08); }
-      .service-card-arrow { display: flex; }
       .service-card .icon { width: 40px; height: 40px; font-size: 1.2rem; }
       .service-card h3 { font-size: 0.95rem; }
       .service-card p { font-size: 0.85rem; }
@@ -1048,7 +1039,6 @@
     if (grid) {
       grid.innerHTML = servicesDB.map(function(s) {
         return '<div class="service-card">' +
-          '<span class="service-card-arrow" aria-hidden="true">▼</span>' +
           '<div class="icon">' + s.icon + '</div>' +
           '<h3>' + s.title + '</h3>' +
           '<p class="service-card-short">' + s.shortDesc + '</p>' +

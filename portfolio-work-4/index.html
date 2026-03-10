@@ -191,6 +191,10 @@
       color: #fff;
     }
     .service-block p { color: #888; font-size: 0.9rem; }
+    .service-block-img { position: relative; width: 100%; height: 140px; margin: -1.5rem -1.5rem 1rem -1.5rem; overflow: hidden; background: #111; }
+    .service-block-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .service-block-img .sb-fb { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; font-size: 2rem; color: #ff3366; }
+    .service-block-img .sb-fb.show { display: flex; }
 
     .cta {
       text-align: center;
@@ -344,18 +348,22 @@
       <h2>Направления</h2>
       <div class="services">
         <a href="#contact" class="service-block anim-v">
+          <div class="service-block-img"><img src="direction-expo.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="sb-fb">🎨</span></div>
           <h3>Выставки</h3>
           <p>Аренда стен и пространства под экспозиции. Срок от одной недели.</p>
         </a>
         <a href="#contact" class="service-block anim-v">
+          <div class="service-block-img"><img src="direction-workshop.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="sb-fb">📚</span></div>
           <h3>Воркшопы</h3>
           <p>Проведение мастер-классов и лекций. Столы и стулья по запросу.</p>
         </a>
         <a href="#contact" class="service-block anim-v">
+          <div class="service-block-img"><img src="direction-concert.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="sb-fb">🎤</span></div>
           <h3>Концерты</h3>
           <p>Камерные концерты и акустические выступления. Звук и свет.</p>
         </a>
         <a href="#contact" class="service-block anim-v">
+          <div class="service-block-img"><img src="direction-shoot.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="sb-fb">📷</span></div>
           <h3>Съёмки</h3>
           <p>Фото- и видеосъёмка. Почасовая аренда, без выходных.</p>
         </a>
