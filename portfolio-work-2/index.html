@@ -46,13 +46,48 @@
     nav a:hover { color: #0f172a; }
     /* Hero */
     .hero {
+      position: relative;
       min-height: 85vh;
       display: flex;
       align-items: center;
       padding: 5rem 1.5rem 4rem;
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: #f1f5f9;
+      overflow: hidden;
     }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg .hero-cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    .hero-bg .photo-placeholder {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-bg .photo-placeholder::before {
+      content: '📷';
+      font-size: clamp(4rem, 12vw, 7rem);
+      opacity: 0.2;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,23,42,0.7) 0%, rgba(30,41,59,0.9) 100%);
+    }
+    .hero .container { position: relative; z-index: 1; }
     .hero h1 { font-size: clamp(2rem, 4.5vw, 2.75rem); font-weight: 700; margin-bottom: 0.75rem; }
     .hero p { font-size: 1.05rem; color: #94a3b8; max-width: 480px; margin-bottom: 1.5rem; }
     .btn {
@@ -92,10 +127,47 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       transition: box-shadow 0.2s, transform 0.2s;
     }
-    .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .card:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.12); transform: translateY(-6px); }
+    .card { overflow: hidden; padding: 0; text-decoration: none; color: inherit; display: block; cursor: pointer; }
+    .card-img,
+    .photo-placeholder {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .halls-intro-img.photo-placeholder {
+      max-width: 560px;
+      height: 280px;
+      margin: 1.5rem auto;
+      border-radius: 12px;
+      font-size: 4rem;
+      background: linear-gradient(145deg, #1e293b, #334155);
+    }
+    .card-body { padding: 1.5rem; }
     .card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: #0f172a; }
     .card p { color: #64748b; font-size: 0.9rem; }
     .card .price { font-weight: 700; color: #3b82f6; margin-top: 0.5rem; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .anim-on-scroll { opacity: 0; transform: translateY(20px); }
+    .anim-on-scroll.visible { animation: fadeInUp 0.6s ease forwards; }
+    .benefit { cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; }
+    .benefit:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .benefit { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; }
+    .benefit span { font-size: 1.5rem; flex-shrink: 0; }
+    .benefit strong { display: block; color: #0f172a; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .benefit p { color: #64748b; font-size: 0.85rem; margin: 0; }
+    .prices-list { max-width: 520px; margin: 1.5rem auto 0; text-align: left; }
+    .prices-list li { color: #64748b; margin-bottom: 0.5rem; padding-left: 1.25rem; position: relative; }
+    .prices-list li::before { content: '•'; color: #3b82f6; position: absolute; left: 0; }
     /* Form */
     .form-section { background: #f1f5f9; }
     .form-wrap {
@@ -153,8 +225,61 @@
       font-size: 0.9rem;
     }
     footer a { color: #3b82f6; text-decoration: none; }
-    @media (max-width: 640px) {
-      nav a { margin-left: 1rem; }
+    .gallery-studio { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 1.5rem; }
+    .gallery-studio .g-item { position: relative; aspect-ratio: 1; background: linear-gradient(145deg, #e2e8f0, #cbd5e1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: transform 0.3s; overflow: hidden; }
+    .gallery-studio .g-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .gallery-studio .g-item .g-fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; }
+    .gallery-studio .g-item.img-failed img { display: none; }
+    .gallery-studio .g-item.img-failed .g-fallback { display: flex; }
+    .gallery-studio .g-item:hover { transform: scale(1.05); }
+    .card-img-wrap { position: relative; width: 100%; height: 160px; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-img-wrap .photo-placeholder { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-size: 2rem; background: linear-gradient(145deg, #e2e8f0, #cbd5e1); border-radius: 12px 12px 0 0; }
+    .card-img-wrap .photo-placeholder.show { display: flex; }
+    .team-studio { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .team-studio .t-card { text-align: center; padding: 1.25rem; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+    .team-studio .t-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+    .team-studio .t-ava { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(145deg, #3b82f6, #2563eb); margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    .team-studio .t-card strong { color: #0f172a; font-size: 0.95rem; }
+    .team-studio .t-card span { color: #64748b; font-size: 0.85rem; }
+    .packages { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .packages .pkg { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.3s, transform 0.3s; }
+    .packages .pkg:hover { border-color: #3b82f6; transform: translateY(-4px); }
+    .packages .pkg h3 { color: #0f172a; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .packages .pkg .pkg-price { font-size: 1.35rem; font-weight: 700; color: #3b82f6; margin: 0.5rem 0; }
+    .packages .pkg p { color: #64748b; font-size: 0.875rem; }
+    .footer-studio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: left; max-width: 1000px; margin: 0 auto 2rem; }
+    .footer-studio h4 { font-size: 0.95rem; color: #0f172a; margin-bottom: 0.75rem; }
+    .footer-studio p, .footer-studio a { color: #64748b; font-size: 0.875rem; text-decoration: none; display: block; margin-bottom: 0.35rem; }
+    .footer-studio a:hover { color: #3b82f6; }
+    @media (max-width: 768px) {
+      .container { padding: 0 1rem; }
+      header { padding: 0.6rem 0; }
+      .logo { font-size: 1.1rem; }
+      nav { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+      nav a { margin-left: 0; font-size: 0.85rem; padding: 0.4rem; min-height: 44px; align-items: center; }
+      .hero { padding: 4rem 1rem 3rem; min-height: 75vh; }
+      .hero h1 { font-size: 1.6rem; }
+      .hero p { font-size: 0.95rem; }
+      .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+      section { padding: 2.5rem 0; }
+      section h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+      .cards { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+      .card-img { height: 140px; }
+      .card-body { padding: 1.25rem; }
+      .form-wrap { padding: 1.5rem; margin: 0 1rem; }
+      .halls-intro-img { height: 220px; margin: 1rem auto; }
+      .benefits { grid-template-columns: 1fr; }
+      .gallery-studio { grid-template-columns: repeat(2, 1fr); }
+      .footer-studio { grid-template-columns: 1fr; text-align: center; }
+      .packages { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem 1rem; font-size: 0.85rem; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.4rem; }
+      section h2 { font-size: 1.25rem; }
+      .card-img { height: 120px; }
+      .halls-intro-img { height: 180px; }
     }
   </style>
 </head>
@@ -164,14 +289,21 @@
       <a href="#" class="logo">Свет</a>
       <nav>
         <a href="#halls">Залы</a>
-        <a href="#prices">Цены</a>
+        <a href="#gallery-studio">Галерея</a>
+        <a href="#team-studio">Команда</a>
+        <a href="#prices">Условия</a>
         <a href="#book">Забронировать</a>
+        <a href="#faq-studio">Вопросы</a>
         <a href="#contacts">Контакты</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
+    <div class="hero-bg">
+      <img src="hero.jpg" alt="" class="hero-cover-img" onerror="this.style.display='none';var p=this.nextElementSibling;if(p)p.style.display='flex';">
+      <div class="photo-placeholder" style="display:none;"></div>
+    </div>
     <div class="container">
       <h1>Фотостудия «Свет»</h1>
       <p>Аренда залов для съёмок в Москве. Естественный свет, циклорама, гримёрка. Бронируйте онлайн.</p>
@@ -182,22 +314,63 @@
   <section id="halls">
     <div class="container">
       <h2>Наши залы</h2>
+      <div class="halls-intro-wrap">
+        <img src="hall-intro.jpg" alt="" class="halls-intro-img" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')">
+        <div class="halls-intro-img photo-placeholder" aria-hidden="true" style="display:none">📷</div>
+      </div>
+      <style>.halls-intro-wrap{position:relative;max-width:720px;margin:0 auto 1.5rem}.halls-intro-wrap .halls-intro-img{width:100%;height:220px;object-fit:cover;border-radius:12px;display:block}.halls-intro-wrap .photo-placeholder{position:absolute;inset:0;width:100%;height:220px;border-radius:12px;display:none;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(145deg,#e2e8f0,#cbd5e1)}.halls-intro-wrap .photo-placeholder.show{display:flex}</style>
       <div class="cards">
-        <div class="card">
-          <h3>Зал «Лофт»</h3>
-          <p>80 м², панорамные окна, кирпичная стена. Идеально для портретов и интерьерной съёмки.</p>
-          <p class="price">от 2 500 ₽/час</p>
-        </div>
-        <div class="card">
-          <h3>Зал «Циклорама»</h3>
-          <p>Белая циклорама 6×4 м, импульсный свет в аренду. Для каталога и рекламы.</p>
-          <p class="price">от 3 000 ₽/час</p>
-        </div>
-        <div class="card">
-          <h3>Зал «Мини»</h3>
-          <p>Компактный зал 25 м² для видеоблогов и студийных портретов.</p>
-          <p class="price">от 1 500 ₽/час</p>
-        </div>
+        <a href="#book" class="card anim-on-scroll">
+          <div class="card-img-wrap"><img src="hall-1.jpg" alt="Зал Лофт" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="photo-placeholder">🪟</span></div>
+          <div class="card-body">
+            <h3>Зал «Лофт»</h3>
+            <p>80 м², панорамные окна, кирпичная стена. Идеально для портретов и интерьерной съёмки.</p>
+            <p class="price">от 2 500 ₽/час</p>
+          </div>
+        </a>
+        <a href="#book" class="card anim-on-scroll">
+          <div class="card-img-wrap"><img src="hall-2.jpg" alt="Зал Циклорама" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="photo-placeholder">💡</span></div>
+          <div class="card-body">
+            <h3>Зал «Циклорама»</h3>
+            <p>Белая циклорама 6×4 м, импульсный свет в аренду. Для каталога и рекламы.</p>
+            <p class="price">от 3 000 ₽/час</p>
+          </div>
+        </a>
+        <a href="#book" class="card anim-on-scroll">
+          <div class="card-img-wrap"><img src="hall-3.jpg" alt="Зал Мини" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="photo-placeholder">🎬</span></div>
+          <div class="card-body">
+            <h3>Зал «Мини»</h3>
+            <p>Компактный зал 25 м² для видеоблогов и студийных портретов.</p>
+            <p class="price">от 1 500 ₽/час</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery-studio" style="background: #f1f5f9;">
+    <div class="container">
+      <h2>Работы в наших залах</h2>
+      <div class="gallery-studio">
+        <div class="g-item anim-on-scroll"><img src="gallery-1.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">📷</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-2.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">🪟</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-3.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">💡</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-4.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">🎬</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-5.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">👗</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-6.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">📷</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-7.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">💡</span></div>
+        <div class="g-item anim-on-scroll"><img src="gallery-8.jpg" alt="" onerror="this.parentElement.classList.add('img-failed')"><span class="g-fallback">🪟</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team-studio">
+    <div class="container">
+      <h2>Команда</h2>
+      <div class="team-studio">
+        <div class="t-card anim-on-scroll"><div class="t-ava">👨</div><strong>Андрей</strong><span>Администратор</span></div>
+        <div class="t-card anim-on-scroll"><div class="t-ava">👩</div><strong>Елена</strong><span>Светотехник</span></div>
+        <div class="t-card anim-on-scroll"><div class="t-ava">👨</div><strong>Игорь</strong><span>Техподдержка</span></div>
       </div>
     </div>
   </section>
@@ -206,8 +379,26 @@
     <div class="container">
       <h2>Условия</h2>
       <p style="text-align: center; color: #64748b; max-width: 560px; margin: 0 auto;">
-        Минимальное бронирование — 2 часа. В стоимость входит базовое оборудование. Гримёрка и парковка — бесплатно.
+        Минимальное бронирование — 2 часа. В стоимость входит базовое оборудование.
       </p>
+      <h3 style="font-size: 1.1rem; color: #0f172a; text-align: center; margin-top: 1.5rem; margin-bottom: 0.75rem;">Что входит в аренду</h3>
+      <div class="benefits">
+        <div class="benefit anim-on-scroll"><span>💡</span><div><strong>Свет</strong><p>Софиты и стойки в базовом наборе</p></div></div>
+        <div class="benefit anim-on-scroll"><span>🪞</span><div><strong>Гримёрка</strong><p>Бесплатно при брони от 2 часов</p></div></div>
+        <div class="benefit anim-on-scroll"><span>🅿️</span><div><strong>Парковка</strong><p>Места для гостей у здания</p></div></div>
+        <div class="benefit anim-on-scroll"><span>📋</span><div><strong>Договор</strong><p>Оформляем по запросу для юрлиц</p></div></div>
+      </div>
+      <ul class="prices-list">
+        <li>Оплата на месте или по счёту для организаций.</li>
+        <li>Отмена бесплатно за 24 часа до съёмки.</li>
+        <li>Дополнительное оборудование (объективы, рефлекторы) — по запросу.</li>
+      </ul>
+      <h3 style="font-size: 1.1rem; color: #0f172a; text-align: center; margin-top: 2rem; margin-bottom: 0.75rem;">Пакеты аренды</h3>
+      <div class="packages">
+        <div class="pkg anim-on-scroll"><h3>Разовое бронирование</h3><div class="pkg-price">от 2 500 ₽/час</div><p>Лофт, Мини или Циклорама. Без абонемента.</p></div>
+        <div class="pkg anim-on-scroll"><h3>4 часа в месяц</h3><div class="pkg-price">8 000 ₽/мес</div><p>Фиксированная скидка для постоянных клиентов.</p></div>
+        <div class="pkg anim-on-scroll"><h3>Полный день</h3><div class="pkg-price">от 15 000 ₽</div><p>8 часов в любом зале. Под съёмки и мероприятия.</p></div>
+      </div>
     </div>
   </section>
 
@@ -234,17 +425,32 @@
     </div>
   </section>
 
+  <section id="faq-studio" style="background: #f1f5f9;">
+    <div class="container">
+      <h2>Частые вопросы</h2>
+      <div style="max-width: 560px; margin: 0 auto;">
+        <div class="benefit anim-on-scroll" style="margin-bottom: 0.75rem; cursor: pointer;"><span>❓</span><div><strong>Минимальное время аренды?</strong><p>2 часа. Далее почасово.</p></div></div>
+        <div class="benefit anim-on-scroll" style="margin-bottom: 0.75rem; cursor: pointer;"><span>📅</span><div><strong>Как отменить бронь?</strong><p>Бесплатная отмена за 24 часа до съёмки.</p></div></div>
+      </div>
+    </div>
+  </section>
+
   <section id="contacts">
     <div class="container" style="text-align: center;">
       <h2>Контакты</h2>
       <p style="color: #64748b; margin-top: 0.5rem;">Москва, ул. Примерная, 10 · Пн–Вс 9:00–22:00</p>
-      <p style="margin-top: 1rem;"><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+      <p style="margin-top: 1rem;"><a href="tel:+79991234567" style="color: #3b82f6; font-weight: 600;">+7 (999) 123-45-67</a></p>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p>Фотостудия «Свет» · Пример лендинга для портфолио</p>
+      <div class="footer-studio">
+        <div><h4>Адрес</h4><p>Москва, ул. Примерная, 10</p><p>Пн–Вс 9:00–22:00</p></div>
+        <div><h4>Контакты</h4><a href="tel:+79991234567">+7 (999) 123-45-67</a><a href="mailto:studio@svet.example">studio@svet.example</a></div>
+        <div><h4>Соцсети</h4><a href="#">VK</a><a href="#">Telegram</a></div>
+      </div>
+      <p style="text-align: center; padding-top: 1rem; border-top: 1px solid #e2e8f0;">Фотостудия «Свет» · Премиум-лендинг для портфолио</p>
     </div>
   </footer>
 
@@ -257,6 +463,13 @@
         .then(function(r) { if (r.ok) { success.classList.add('visible'); form.reset(); } })
         .catch(function() { success.textContent = 'Ошибка отправки. Настройте Formspree (formspree.io) для приёма заявок.'; success.classList.add('visible'); });
     });
+    (function() {
+      var els = document.querySelectorAll('.anim-on-scroll');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
+      els.forEach(function(el) { observer.observe(el); });
+    })();
   </script>
 </body>
 </html>

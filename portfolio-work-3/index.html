@@ -15,6 +15,10 @@
       <a href="index.html" class="logo">Практик</a>
       <nav>
         <a href="index.html">Главная</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#process">Процесс</a>
+        <a href="#tariffs">Тарифы</a>
+        <a href="#team-praktik">Команда</a>
         <a href="services.html">Услуги</a>
         <a href="contacts.html">Контакты</a>
       </nav>
@@ -23,7 +27,11 @@
 
   <main>
     <section class="hero">
-      <div class="container">
+      <div class="hero-bg">
+        <img src="hero.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.classList.add('show');">
+        <div class="hero-placeholder"></div>
+      </div>
+      <div class="container hero-text">
         <h1>Студия «Практик»</h1>
         <p>Помогаем бизнесу с цифровыми решениями: сайты, поддержка, консультации.</p>
       </div>
@@ -32,16 +40,53 @@
     <section class="content">
       <div class="container">
         <h2>О нас</h2>
+        <div class="about-img-wrap">
+          <img src="hero.jpg" alt="" class="about-img-pic" onerror="this.style.display='none'; this.nextElementSibling.classList.add('show');">
+          <div class="photo-placeholder about-ph" aria-hidden="true">💻</div>
+        </div>
         <p>Мы делаем понятные и быстрые сайты под ваши задачи. Главная, услуги, контакты — без лишнего, с единым стилем и адаптивной вёрсткой. Структуру можно расширить под блог или портфолио.</p>
+        <p style="color: #94a3b8; margin-top: 1rem;">Работаем с малым бизнесом и стартапами: лендинги, корпоративные страницы, доработка существующих сайтов. Сроки и бюджет обсуждаем в первом же разговоре.</p>
         <div class="cards">
-          <a href="services.html" class="card">
+          <a href="services.html" class="card anim-on-scroll">
             <h3>Услуги</h3>
             <p>Перечень направлений и условия работы</p>
           </a>
-          <a href="contacts.html" class="card">
+          <a href="contacts.html" class="card anim-on-scroll">
             <h3>Контакты</h3>
             <p>Форма обратной связи и способы связи</p>
           </a>
+        </div>
+        <div class="stats-praktik anim-on-scroll" style="margin-top:2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;padding:1.5rem;background:rgba(255,255,255,0.04);border-radius:12px;">
+          <div style="text-align:center;cursor:pointer;"><span style="display:block;font-size:1.5rem;font-weight:700;color:#38bdf8;">5+</span><span style="font-size:0.85rem;color:#94a3b8;">лет опыта</span></div>
+          <div style="text-align:center;cursor:pointer;"><span style="display:block;font-size:1.5rem;font-weight:700;color:#38bdf8;">30+</span><span style="font-size:0.85rem;color:#94a3b8;">проектов</span></div>
+        </div>
+
+        <h2 id="cases" style="margin-top: 3rem;">Кейсы</h2>
+        <div class="cases-grid">
+          <a href="services.html" class="case-card anim-on-scroll"><div class="case-thumb"><img src="case-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="case-fallback">🌐</span></div><h3>Лендинг для сервиса</h3><p>Адаптив, форма заявки, интеграция с CRM</p></a>
+          <a href="services.html" class="case-card anim-on-scroll"><div class="case-thumb"><img src="case-2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="case-fallback">📦</span></div><h3>Сайт интернет-магазина</h3><p>Каталог, корзина, личный кабинет</p></a>
+          <a href="services.html" class="case-card anim-on-scroll"><div class="case-thumb"><img src="case-3.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.classList.add('show')"><span class="case-fallback">🏢</span></div><h3>Корпоративный портал</h3><p>Многостраничный сайт, блог, контакты</p></a>
+        </div>
+
+        <h2 id="process" style="margin-top: 3rem;">Как мы работаем</h2>
+        <div class="process-praktik">
+          <div class="process-step anim-on-scroll"><span class="step-num">1</span><h3>Заявка</h3><p>Обсуждаем задачу, сроки и бюджет</p></div>
+          <div class="process-step anim-on-scroll"><span class="step-num">2</span><h3>Прототип</h3><p>Структура и макет под ваше одобрение</p></div>
+          <div class="process-step anim-on-scroll"><span class="step-num">3</span><h3>Вёрстка и запуск</h3><p>Разработка, тесты, публикация</p></div>
+        </div>
+
+        <h2 id="tariffs" style="margin-top: 3rem;">Тарифы</h2>
+        <div class="tariffs-praktik">
+          <div class="tariff anim-on-scroll"><h3>Старт</h3><div class="tariff-price">от 50 000 ₽</div><p>Лендинг до 5 блоков, форма, адаптив</p></div>
+          <div class="tariff anim-on-scroll"><h3>Бизнес</h3><div class="tariff-price">от 150 000 ₽</div><p>Многостраничный сайт, каталог, SEO</p></div>
+          <div class="tariff anim-on-scroll"><h3>Под ключ</h3><div class="tariff-price">от 300 000 ₽</div><p>Дизайн, разработка, контент, поддержка</p></div>
+        </div>
+
+        <h2 id="team-praktik" style="margin-top: 3rem;">Команда</h2>
+        <div class="team-praktik">
+          <div class="tp-card anim-on-scroll"><div class="tp-ava">👨‍💻</div><strong>Руководитель</strong><span>Стратегия и продакшн</span></div>
+          <div class="tp-card anim-on-scroll"><div class="tp-ava">👩‍💻</div><strong>Разработчик</strong><span>Вёрстка и интеграции</span></div>
+          <div class="tp-card anim-on-scroll"><div class="tp-ava">👨‍🎨</div><strong>Дизайнер</strong><span>Интерфейсы и бренд</span></div>
         </div>
       </div>
     </section>
@@ -49,8 +94,22 @@
 
   <footer>
     <div class="container">
-      <p>Студия «Практик» · Пример многостраничного сайта для портфолио</p>
+      <div class="footer-praktik">
+        <div><h4>Офис</h4><p>Москва, ул. Примерная, 5</p><p>Пн–Пт 10:00–19:00</p></div>
+        <div><h4>Связь</h4><a href="mailto:hello@praktik.example">hello@praktik.example</a><a href="tel:+79991234567">+7 (999) 123-45-67</a></div>
+        <div><h4>Услуги</h4><a href="services.html">Услуги</a><a href="contacts.html">Контакты</a></div>
+      </div>
+      <p style="text-align: center; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">Студия «Практик» · Премиум многостраничный сайт для портфолио</p>
     </div>
   </footer>
+  <script>
+    (function() {
+      var els = document.querySelectorAll('.anim-on-scroll');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1, rootMargin: '0px 0px 40px 0px' });
+      els.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
 </body>
 </html>
