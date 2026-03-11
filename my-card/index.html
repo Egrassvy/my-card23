@@ -572,9 +572,10 @@
       section { padding: 2rem 0; }
       section h2 { font-size: 1.4rem; margin-bottom: 1.25rem; }
       .about-section { flex-direction: column; text-align: center; gap: 1.5rem; }
-      .about-photo { width: 160px; height: 160px; }
-      .about-text { min-width: 0; }
+      .about-photo { width: 160px; height: 160px; margin: 0 auto; }
+      .about-text { min-width: 0; text-align: left; }
       .about-text p { font-size: 0.95rem; }
+      #about h2 { text-align: left; }
       .services-grid {
         grid-template-columns: 1fr;
         gap: 0.75rem;
@@ -602,18 +603,21 @@
       .service-card h3 { font-size: 0.95rem; }
       .service-card p { font-size: 0.85rem; }
       .portfolio-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
       }
-      .portfolio-card .thumb { height: 160px; }
+      .portfolio-card .thumb { height: 120px; }
       .portfolio-card .thumb .thumb-fallback { font-size: 2.5rem; }
-      .portfolio-card .content { padding: 1rem; }
-      .process-steps { grid-template-columns: 1fr; gap: 1rem; }
-      .process-step-card { padding: 1rem; }
+      .portfolio-card .content { padding: 0.75rem; }
+      .portfolio-card h3 { font-size: 0.9rem; }
+      .portfolio-card p { font-size: 0.75rem; }
+      .process-steps { grid-template-columns: 1fr; gap: 0.75rem; }
+      .process-step-card { padding: 1rem; background: rgba(30,58,95,0.4); border: 1px solid rgba(56,189,248,0.2); }
+      .service-card { background: rgba(30,58,95,0.35); border-color: rgba(56,189,248,0.2); }
       .tech-stack { gap: 0.5rem; }
       .tech-stack span { padding: 0.45rem 0.85rem; font-size: 0.8rem; }
-      .portfolio-card h3 { font-size: 1rem; }
-      .portfolio-card p { font-size: 0.8rem; }
+      .hero-price-hint { display: block; margin: 1rem auto 0; max-width: 90%; }
+      section h2 { padding-left: 1rem; }
       .contacts-section { padding: 1.5rem 1rem; }
       .contacts-list {
         flex-direction: column;
