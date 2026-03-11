@@ -119,10 +119,10 @@
       .hero h1 { font-size: clamp(1.75rem, 8vw, 3rem); }
       .hero p { font-size: 1rem; }
       section { padding: 2.5rem 0; }
-      section h2 { font-size: 1.35rem; margin-bottom: 1.25rem; letter-spacing: 0.1em; }
+      section h2 { font-size: 1.35rem; margin-bottom: 1.25rem; letter-spacing: 0.1em; padding-left: 1rem; text-align: left; }
       .about-img { height: 200px; margin: 1rem auto; }
-      .services { grid-template-columns: 1fr; gap: 1rem; }
-      .service-block { padding: 1.25rem; }
+      .services { grid-template-columns: 1fr; gap: 0.75rem; }
+      .service-block { padding: 1.25rem; background: rgba(255,51,102,0.06); border-color: rgba(255,51,102,0.25); }
       .cta { padding: 2.5rem 0; }
       .btn { padding: 0.85rem 1.5rem; font-size: 0.85rem; }
       footer { padding: 1.5rem 1rem; font-size: 0.8rem; }
@@ -132,6 +132,7 @@
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 1.5rem; }
+      section h2 { padding-left: 1rem; }
       .about-img { height: 180px; }
     }
     .about-grid p {
